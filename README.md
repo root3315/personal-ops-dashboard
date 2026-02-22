@@ -4,6 +4,14 @@ A lightweight CLI and cron-driven ops dashboard for personal monitoring and auto
 
 Collects CPU, memory, disk, network, load average, and process metrics. Supports configurable alert thresholds, service monitoring, historical summaries, and automated cron collection.
 
+## Project Location
+
+This project is located at `/tmp/personal-ops-dashboard_o_hkxwdj/` on the local filesystem. It is not currently pushed to a remote GitHub repository. The directory exists locally and contains all project files:
+
+- `dashboard.py` - Main application script
+- `requirements.txt` - Python dependencies
+- `README.md` - This file
+
 ## Quick Start
 
 ```bash
