@@ -428,18 +428,23 @@ def load_config() -> dict:
         "cron_interval": 5,
     }
 
-    if os.path.exists(DEFAULT_CONFIG_FILE):
-        try:
-            with open(DEFAULT_CONFIG_FILE, "r") as f:
-                user_config = json.load(f)
-            # Merge with defaults
-            for key, value in user_config.items():
-                if isinstance(value, dict) and key in default_config:
-                    default_config[key].update(value)
-                else:
-                    default_config[key] = value
-        except (json.JSONDecodeError, IOError) as e:
-            logger.warning("Could not load config file: %s. Using defaults.", e)
+    if not os.path.exists(DEFAULT_CONFIG_FILE):
+        logger.info("Config file not found at %s. Using defaults.", DEFAULT_CONFIG_FILE)
+        return default_config
+
+    try:
+        with open(DEFAULT_CONFIG_FILE, "r") as f:
+            user_config = json.load(f)
+        # Merge with defaults
+        for key, value in user_config.items():
+            if isinstance(value, dict) and key in default_config:
+                default_config[key].update(value)
+            else:
+                default_config[key] = value
+    except json.JSONDecodeError as e:
+        logger.error("Config file has invalid JSON: %s. Using defaults.", e)
+    except IOError as e:
+        logger.error("Could not read config file: %s. Using defaults.", e)
 
     return default_config
 
